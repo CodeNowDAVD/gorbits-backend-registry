@@ -1,7 +1,11 @@
 import { Redis } from "@upstash/redis";
 import { NextResponse } from "next/server";
 
-const redis = Redis.fromEnv();
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_KV_REST_API_URL!,
+  token: process.env.UPSTASH_REDIS_REST_KV_REST_API_TOKEN!,
+});
+
 
 export async function GET() {
   const url = await redis.get<string>("active_backend_url");
